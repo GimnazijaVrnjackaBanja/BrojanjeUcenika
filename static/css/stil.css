@@ -1,0 +1,94 @@
+body {
+  background-color: rgb(17, 0, 55);
+  text-align: center;
+  margin: 0px 10px;
+}
+.naslovgvb {
+  color: azure;
+  font-family: Calibri, monospace;
+  font: 3em;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /*background-color: #2196F3;*/
+  padding: 3px;
+}
+.grid-item {
+  background-color: rgb(17, 0, 55);
+  /*border: 1px solid rgba(250, 5, 5, 0.8);*/
+  padding: 10px;
+  font-size: 20px;
+  text-align: left;
+  height: 100px;
+}
+.slika{
+  text-align: left;
+}
+.ukupno-prisutnih{
+  color: white;
+}
+.brojaci {
+  background-color: aqua;
+  /*border: 3px solid black;*/
+  width: 95%;
+  border-radius: 5px;
+}
+.dugmad {
+  font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-row-gap: 3px;
+}
+
+form {
+  text-align: center;
+}
+
+button {
+  padding: 1px;
+  font-size: 20px;
+  width: 95%;
+  height: 70px;
+  border: 3px solid black;
+  border-radius: 5px;
+}
+.bold {
+  font-weight: 600;
+  font-size: 30px;
+}
+.centrirani-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 65px; /* Postavite željenu visinu */
+}
+/* Dodatni stilovi za različite boje */
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.blue {
+  background-color: rgb(5, 120, 220);
+}
+.green {
+  background-color: green;
+}
+.gray {
+  background-color: gray;
+}
+.odjava {
+  background-color: rgb(47, 47, 47);
+  color: rgb(255, 0, 0);
+}
+.okvir{
+  border: 3px solid #f0ec00; 
+}
+.prisutni {
+  color: rgb(0, 255, 0);
+  font-weight: 900;
+  text-align: center;
+  padding: 10px;
+}
