@@ -18,6 +18,7 @@
 		<!-- pocetak dugmadi -->
 		<div class="dugmad">
 			{% for counter in counters %}
+			
 			<div
 				class="{{ 'red' if counter.name.startswith('I-') else 'yellow' if counter.name.startswith('II-') else 'blue' if counter.name.startswith('III-') else 'green' if counter.name.startswith('IV-') else 'gray' }} bold brojaci centrirani-div okvir"
 			>
