@@ -28,6 +28,9 @@ body {
 .ukupno-prisutnih{
   color: white;
 }
+.broj{
+  color: white;
+}
 .brojaci {
   background-color: aqua;
   /*border: 3px solid black;*/
