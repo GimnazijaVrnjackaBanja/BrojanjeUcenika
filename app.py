@@ -5,7 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-app.config["SECRET_KEY"] = "secret"
+app.config["SECRET_KEY"] = "secret!"
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
 
@@ -68,7 +68,7 @@ def Prijava(counter_name):
     print("Emitting update prijave")  # Dodajte ovu liniju
 
     return redirect(url_for("index"))
-    socketio.emit("update")
+    
 
 
 @app.route("/Odjava/<counter_name>", methods=["POST"])

@@ -55,7 +55,9 @@
 
 		<script>
 			// Povežite se sa SocketIO serverom
-			var socket = io.connect("http://" + document.domain + ":" + location.port);
+			var socket = io.connect(
+				"http://" + document.domain + ":" + location.port
+			);
 			//var socket = io.connect("http://192.168.1.101:5000");
 
 			// Obrada događaja 'update'
@@ -64,12 +66,15 @@
 				// data sadrži nove vrednosti brojača
 				console.log(data);
 				// Implementirajte logiku ažuriranja HTML-a prema vašim potrebama
+				// Osveži celu stranicu nakon primanja update događaja
+				location.reload();
 			});
-			
+
 			//Funkcija za automatsko osvežavanje stranice na svakih 5 sekundi
-			setTimeout(function() {
-            location.reload();
-        }, 5000);
+
+			//setTimeout(function() {
+			//      location.reload();
+			//  }, 5000);
 		</script>
 	</body>
 </html>
