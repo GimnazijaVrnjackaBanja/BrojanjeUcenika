@@ -13,6 +13,11 @@ class Counter(db.Model):
     count = db.Column(db.Integer, default=0)
     datumvreme = db.Column(db.DateTime, default=datetime.now)
 
+class Detaljno(db.Model):
+    iddetaljno = db.Column(db.Integer, primary_key=True)
+    imebrojaca = db.Column(db.String(20), nullable=False, unique=False)
+    vrednostbrojaca = db.Column(db.Integer, default=0)
+    datumvreme = db.Column(db.DateTime, default=datetime.now)
 
 with app.app_context():
     db.create_all()
@@ -34,6 +39,12 @@ def Prijava(counter_name):
         counter.count += 1
         counter.datumvreme = datetime.now()
         db.session.commit()
+
+        # Dodavanje novog reda u bazi za svaku prijavu
+        new_entry = Detaljno(imebrojaca=counter_name, vrednostbrojaca=1, datumvreme=datetime.now())
+        db.session.add(new_entry)
+        db.session.commit()
+
     return redirect(url_for("index"))
 
 
@@ -43,7 +54,12 @@ def Odjava(counter_name):
     if counter and counter.count > 0:
         counter.count -= 1
         counter.datumvreme = datetime.now()
+
+        # Dodavanje novog reda u bazi za svaku odjavu
+        new_entry = Detaljno(imebrojaca=counter_name, vrednostbrojaca=-1, datumvreme=datetime.now())
+        db.session.add(new_entry)
         db.session.commit()
+
     return redirect(url_for("index"))
 
 
