@@ -8,17 +8,22 @@
 	</head>
 	<body>
 		<div class="grid-container">
-			<div class="grid-item"><img class="slika" src="/static/jpg/GVBlogo.jpg" alt="GVBlogo" height=100%"></div>
-			<div class="grid-item"> </div>
-			<div class="grid-item"><h2 class="prisutni">Ukupno prisutnih u Gimnaziji: <br> {{ ukupno_prisutnih }} </h2>
-
-			</div>  
-				
+			<div class="grid-item">
+				<img class="slika" src="/static/jpg/GVBlogo.jpg" alt="GVBlogo"
+				height=100%">
+			</div>
+			<div class="grid-item"></div>
+			<div class="grid-item">
+				<h2 class="prisutni">
+					Ukupno prisutnih u Gimnaziji: <br />
+					{{ ukupno_prisutnih }}
+				</h2>
+			</div>
 		</div>
 		<!-- pocetak dugmadi -->
 		<div class="dugmad">
 			{% for counter in counters %}
-			
+
 			<div
 				class="{{ 'red' if counter.name.startswith('I-') else 'yellow' if counter.name.startswith('II-') else 'blue' if counter.name.startswith('III-') else 'green' if counter.name.startswith('IV-') else 'gray' }} bold brojaci centrirani-div okvir"
 			>
@@ -44,5 +49,27 @@
 
 			{% endfor %}
 		</div>
+
+		<!-- Skripte za SocketIO -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+
+		<script>
+			// Povežite se sa SocketIO serverom
+			var socket = io.connect("http://" + document.domain + ":" + location.port);
+			//var socket = io.connect("http://192.168.1.101:5000");
+
+			// Obrada događaja 'update'
+			socket.on("update", function (data) {
+				// Ažurirajte sadržaj stranice
+				// data sadrži nove vrednosti brojača
+				console.log(data);
+				// Implementirajte logiku ažuriranja HTML-a prema vašim potrebama
+			});
+			
+			//Funkcija za automatsko osvežavanje stranice na svakih 5 sekundi
+			setTimeout(function() {
+            location.reload();
+        }, 5000);
+		</script>
 	</body>
 </html>
