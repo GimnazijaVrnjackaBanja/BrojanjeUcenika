@@ -5,19 +5,24 @@
 		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
 		<link rel="stylesheet" href="/static/css/stil.css" />
 		<title>GVB prisustvo</title>
+		<link rel="icon" href="/static/jpg/GVBfavikon.png" type="image/x-icon" />
 	</head>
 	<body>
 		<div class="grid-container">
 			<div class="grid-item">
-				<img class="slika" src="/static/jpg/GVBlogo.jpg" alt="GVBlogo"
-				height=100%">
+				<img class="slika" src="/static/jpg/GVBlogo.jpg" alt="GVBlogo" height=100%">
 			</div>
-			<div class="grid-item"></div>
 			<div class="grid-item">
 				<h2 class="prisutni">
 					Ukupno prisutnih u Gimnaziji: <br />
+				</h2>
+				<h2 class="broj">
 					{{ ukupno_prisutnih }}
 				</h2>
+			</div>
+			<div class="grid-item" >
+				<h2 id ="datum"></h2>
+				<h2 id ="clock"></h2>
 			</div>
 		</div>
 		<!-- pocetak dugmadi -->
@@ -75,6 +80,45 @@
 			//setTimeout(function() {
 			//      location.reload();
 			//  }, 5000);
+				
+		function updateClock() {
+			var now = new Date();
+			var hours = now.getHours();
+			var minutes = now.getMinutes();
+			var seconds = now.getSeconds();
+
+			hours = hours < 10 ? "0" + hours : hours;
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+
+			var timeString = hours + ":" + minutes + ":" + seconds;
+
+			document.getElementById("clock").innerHTML = timeString;
+  	}
+
+		function updateDate() {
+        var daysOfWeek = ["nedelja", "ponedeljak", "utorak", "sreda", "četvrtak", "petak", "subota"];
+        var months = [
+            "januar", "februar", "mart", "april", "maj", "jun",
+            "jul", "avgust", "septembar", "oktobar", "novembar", "decembar"
+        ];
+
+        var now = new Date();
+        var dayOfWeek = daysOfWeek[now.getDay()];
+        var day = now.getDate();
+        var month = months[now.getMonth()];
+        var year = now.getFullYear();
+
+        var dateString = dayOfWeek + ", " + day + ". " + month + " " + year + ".";
+        document.getElementById("datum").innerHTML = dateString;
+    }
+
+  	setInterval(updateClock, 1000);
+    setInterval(updateDate, 10000);
+
+    updateClock();
+    updateDate();
+				
 		</script>
 	</body>
 </html>

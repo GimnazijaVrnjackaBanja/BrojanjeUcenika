@@ -1,7 +1,10 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
-from datetime import datetime
+from datetime import datetime, timedelta, time
+import schedule
+import threading
+from threading import Timer
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
@@ -65,10 +68,9 @@ def Prijava(counter_name):
         db.session.commit()
 
     socketio.emit("update")
-    print("Emitting update prijave")  # Dodajte ovu liniju
+    print("Emitting update prijave")  # Provera prijave
 
     return redirect(url_for("index"))
-    
 
 
 @app.route("/Odjava/<counter_name>", methods=["POST"])
@@ -86,12 +88,53 @@ def Odjava(counter_name):
         db.session.commit()
 
     socketio.emit("update")
-    print("Emitting update odjave")  # Dodajte ovu liniju
+    print("Emitting update odjave")  # Provera odjave
 
     return redirect(url_for("index"))
 
 
+def reset_counters():
+    with app.app_context():
+        counters = Counter.query.all()
+        for counter in counters:
+            counter.count = 0
+            counter.datumvreme = datetime.now()
+        db.session.commit()
+        socketio.emit("update")
+        print("Brojači su resetovani.")
+
+
+# Funkcija za postavljanje periodičnog zadatka za resetovanje brojača u ponoć
+def set_midnight_reset():
+    now = datetime.now()
+    midnight = datetime(now.year, now.month, now.day, 20, 33, 0)
+    delta = midnight - now
+    seconds_until_midnight = delta.total_seconds()
+
+    # Postavljanje periodičnog zadatka
+    timer = Timer(seconds_until_midnight, reset_counters)
+    timer.start()
+
+
+# Pozivamo funkciju da postavi periodični zadatak
+set_midnight_reset()
+
+# Ovo je bila prva varijanta sa schedule modulom
+# Postavljanje rasporeda za resetovanje brojača svaki dan u ponoć
+# schedule.every().day.at("00:00").do(reset_counters)
+
+
+# Funkcija za pokretanje redovnih zadataka u odvojenom thread-u
+# def run_scheduler():
+#    while True:
+#        schedule.run_pending()
+#        time.sleep(1)
+
+
 if __name__ == "__main__":
+    # scheduler_thread = threading.Thread(target=run_scheduler)
+    # scheduler_thread.start()
+
     # app.run(debug=True)
     # app.run(debug=True, host='0.0.0.0')
     socketio.run(app, host="0.0.0.0", port=5000, debug=True)
