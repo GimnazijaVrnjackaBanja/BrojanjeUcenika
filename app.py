@@ -107,7 +107,7 @@ def reset_counters():
 # Funkcija za postavljanje periodičnog zadatka za resetovanje brojača u ponoć
 def set_midnight_reset():
     now = datetime.now()
-    midnight = datetime(now.year, now.month, now.day, 20, 33, 0)
+    midnight = datetime(now.year, now.month, now.day, 0, 0, 0)
     delta = midnight - now
     seconds_until_midnight = delta.total_seconds()
 
